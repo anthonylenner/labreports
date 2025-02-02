@@ -31,10 +31,10 @@
 
 
   <header>
-    <h1>Fractal Geometry Lab Report</h1>
+    <h1>Module 2 Report</h1>
     <p class="author">
-      [Your Name] <br />
-      [Date]
+      Anthony Lenner <br />
+      2/1/2025
     </p>
   </header>
   
@@ -51,10 +51,7 @@
       <section id="introduction">
         <h2>Introduction</h2>
         <p>
-          This is a sample introduction showcasing how you might structure 
-          your opening section. Replace this paragraph with a concise 
-          overview of the topic or project you are addressing. You can then 
-          expand the explanation as needed.
+         In this module, we learned how to draw some fractals using turtle graphics and loops. Namely, the Koch snowflake and the Dragon Curve. The code for the dragon curve follows below.
         </p>
       </section>
 
@@ -65,18 +62,44 @@
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<pre><code class="language-python">
-	# This is just a sample Python code block
-	# demonstrating how code might be displayed.
+	# Define the dragon curve function
+def dragon_curve(order, length, turn_direction):
+    # Base case: if order is 0, just move forward
+    if order == 0:
+        forward(length)
+    else:
+        # Calculate the new length for each recursive step
+        new_length = length / (2 ** 0.5)
 
-	import numpy as np
-	import matplotlib.pyplot as plt
+        # Recursively draw the dragon curve, turning right and left as needed
+        dragon_curve(order - 1, new_length, 1)  # First segment
+        right(turn_direction * 90)             # Turn by 90 degrees
+        dragon_curve(order - 1, new_length, -1) # Second segment
 
-	x = np.linspace(-10, 10, 100)
-	y = 2*x + 5
+	# Initialize the turtle for drawing
+	initializeTurtle(initial_window_size=(1000, 8000), mode='auto')
 
-	plt.plot(x, y)
-	plt.title("Sample Plot")
-	plt.show()
+	# Move the turtle to a starting position
+	jump(400, 400)
+	face(0)             # Set starting direction
+	color('purple')     # Choose a color
+	
+	# Set up initial order and length
+	order = 0          # Complexity level
+	length = 300        # Initial length of each segment
+	
+	# Draw different orders of the dragon curve
+	
+	for order in range(14):
+	  dragon_curve(order, length, 1)
+	  penup()
+	  jump(400, 500*(2+order))
+	  pendown()
+	  face(0)
+	
+	# Show the final drawing
+	show()
+
 	</code></pre>
 
 
@@ -96,16 +119,34 @@
       
         <h2>Results &amp; Analysis</h2>
         <p>
-          In this placeholder section, you might describe observations,
-          results, or insights gained from any analysis. You can incorporate 
-          references to equations (e.g., $y = mx + b$) or embed images and 
-          other visual aids to illustrate your points.
+          The first thing we learned in the module was how to code Brownian motion. The code is quite simple, it consists of a loop that creates a line and then changes the angle randomly, so that the turtle takes a random walk.
+	  The next thing we learned was the fractal drawing process. For the Koch's snowflake, we first defined a blip line function, which is the part of the fractal that repeats itself. To do that, we use an if statement. It is an iterative process that works a lot like mathematical induction. Note that the arguments of this function are the length of the line and the order (how many times it repeats itself). We define the base case, where the order is 0, as a straight line. Then, if the order is some number n>0, we draw a blip line of order n-1, turn 60 degrees left, draw another blip line of order n-1, turn 120 degrees right, draw the last blip line of order n-1. Now that we have this function, we just need a koch_snowflake function of the length and order to glue three blip lines together side to side, forming a triangle of blip lines. As n approaches infinity, we get the fractal. Of course, we can't render an infinite order. In fact, my laptop is only able to render up to order 7. Nevertheless, the image is impressive.  
         </p>
 
 
 
 
         <figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/koch_snowflake_order_7.png"
+            alt="Koch Snowflake of order 7"
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>
+            <strong>Figure 1:</strong> A broad view of the Mandelbrot set 
+            (max_iter = 100). Colors represent how many iterations were 
+            needed to exceed |z|=2.
+          </figcaption>
+        </figure>
+
+
+	      <p>
+          er 7. Nevertheless, the image is impressive.  
+        </p>
+
+	      <figure>
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Mandel_zoom_00_mandelbrot_set.jpg/800px-Mandel_zoom_00_mandelbrot_set.jpg"
             alt="Mandelbrot Broad View"
@@ -119,7 +160,6 @@
             needed to exceed |z|=2.
           </figcaption>
         </figure>
-
 
 
 
