@@ -51,7 +51,7 @@
       <section id="introduction">
         <h2>Introduction</h2>
         <p>
-         In this module, we learned how to draw some fractals using turtle graphics and loops. Namely, the Koch snowflake and the Dragon Curve. The code for the dragon curve follows below.
+         In this module, we learned how to draw some fractals using turtle graphics and loops. Namely, the Koch snowflake and the Dragon Curve. The code for the Koch snowflake and the dragon curve follows below.
         </p>
       </section>
 
@@ -62,6 +62,44 @@
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<pre><code class="language-python">
+
+	#Koch snowflake	
+		
+	initializeTurtle()
+	showturtle()
+	
+	# Define the blip_line function (Koch curve)
+	def blip_line(length, order):
+	    if order == 0:
+	        forward(length)
+	    else:
+	        blip_line(length / 3, order - 1)
+	        left(60)
+	        blip_line(length / 3, order - 1)
+	        right(120)
+	        blip_line(length / 3, order - 1)
+	        left(60)
+	        blip_line(length / 3, order - 1)
+	
+	# Draw the Koch snowflake
+	def koch_snowflake(length, order):
+	    for _ in range(3):
+	        blip_line(length, order)
+	        right(120)
+	
+	# Set up the turtle
+	jump(250, 500)
+	face(0)
+	color('blue')
+	
+	# Draw the snowflake
+	length = 400
+	order = 7
+	koch_snowflake(length, order)
+	
+	show()	
+		
+	# Dragon Curve
 	# Define the dragon curve function
 def dragon_curve(order, length, turn_direction):
     # Base case: if order is 0, just move forward
@@ -141,21 +179,19 @@ def dragon_curve(order, length, turn_direction):
 
 
 	      <p>
-          er 7. Nevertheless, the image is impressive.  
-        </p>
+         The dragon curve follows a similar process. We create a dragon_curve function that draws a line if order=0 or draws two dragon curves of order n-1 glued together at an angle of 90 degrees if order=n>o. I have extended the code to show the iterative process in action; the first ten iterations of the curve. As with the snowflake, the fractal forms when we let n approach infinity. 	      
+	      </p>
 
 	      <figure>
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Mandel_zoom_00_mandelbrot_set.jpg/800px-Mandel_zoom_00_mandelbrot_set.jpg"
-            alt="Mandelbrot Broad View"
+            src="https://anthonylenner.github.io/labreports/images/koch_snowflake_order_7.png"
+            alt="Dragon Curve"
             width="600"
             height="400"
             loading="lazy"
           />
           <figcaption>
-            <strong>Figure 1:</strong> A broad view of the Mandelbrot set 
-            (max_iter = 100). Colors represent how many iterations were 
-            needed to exceed |z|=2.
+            The Dragon Curve, from the first to the tenth iteration.
           </figcaption>
         </figure>
 
