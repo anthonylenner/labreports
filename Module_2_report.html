@@ -51,7 +51,7 @@
       <section id="introduction">
         <h2>Introduction</h2>
         <p>
-         In this module, we learned how to draw some fractals using turtle graphics and loops. Namely, the Koch snowflake and the Dragon Curve. The code for the Koch snowflake and the dragon curve follows below.
+In this module, we learned how to draw some fractals using turtle graphics and loops. Namely, the Koch snowflake and the Dragon Curve. The code for the Koch snowflake and the dragon curve follows below.
         </p>
       </section>
 
@@ -100,6 +100,7 @@
 	show()	
 		
 	# Dragon Curve
+		
 	# Define the dragon curve function
 def dragon_curve(order, length, turn_direction):
     # Base case: if order is 0, just move forward
@@ -157,7 +158,7 @@ def dragon_curve(order, length, turn_direction):
       
         <h2>Results &amp; Analysis</h2>
         <p>
-          The first thing we learned in the module was how to code Brownian motion. The code is quite simple, it consists of a loop that creates a line and then changes the angle randomly, so that the turtle takes a random walk.
+ The first thing we learned in the module was how to code Brownian motion. The code is quite simple, it consists of a loop that creates a line and then changes the angle randomly, so that the turtle takes a random walk.
 	  The next thing we learned was the fractal drawing process. For the Koch's snowflake, we first defined a blip line function, which is the part of the fractal that repeats itself. To do that, we use an if statement. It is an iterative process that works a lot like mathematical induction. Note that the arguments of this function are the length of the line and the order (how many times it repeats itself). We define the base case, where the order is 0, as a straight line. Then, if the order is some number n>0, we draw a blip line of order n-1, turn 60 degrees left, draw another blip line of order n-1, turn 120 degrees right, draw the last blip line of order n-1. Now that we have this function, we just need a koch_snowflake function of the length and order to glue three blip lines together side to side, forming a triangle of blip lines. As n approaches infinity, we get the fractal. Of course, we can't render an infinite order. In fact, my laptop is only able to render up to order 7. Nevertheless, the image is impressive.  
         </p>
 
@@ -191,7 +192,7 @@ def dragon_curve(order, length, turn_direction):
             loading="lazy"
           />
           <figcaption>
-            The Dragon Curve, from the first to the tenth iteration.
+            The Dragon Curve, from the first to the tenth iteration. One can see how a iteration consists of a two copies of the previous iteration glued together.
           </figcaption>
         </figure>
 
@@ -209,8 +210,8 @@ def dragon_curve(order, length, turn_direction):
       <section id="conclusion">
         <h2>Conclusion</h2>
         <p>
-          In this sample conclusion, we highlight how the iterative approach to generating fractals reveals the vast complexity inherent in seemingly simple equations. Through our Python implementation, we observed that small parameter changes can produce markedly different fractal patterns, underscoring the Mandelbrot set's boundless intricacy. Our visualizations not only confirm the self-similarity and infinite resolution of the set, but also underscore the crucial role of computational optimizations in making high-resolution explorations feasible. Ultimately, this lab demonstrates that fractal geometry, far from being mere mathematical curiosities, provides deep insights into pattern formation and complexity in both pure mathematics and broader scientific contexts. 
-        </p>
+        In conclusion, we have seen how we can use simple recursive rules to create remarkably complex figures. It is amazing to see how rough and complex things as fractals have an intrinsic simplicity. I look forward to looking at different fractals and learning more about the theory.
+	</p>
       </section>
 
      
