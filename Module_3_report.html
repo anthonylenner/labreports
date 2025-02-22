@@ -74,42 +74,69 @@
       
         <h2>Results &amp; Analysis</h2>
         <p>
-          In this placeholder section, you might describe observations,
-          results, or insights gained from any analysis. You can incorporate 
-          references to equations (e.g., $y = mx + b$) or embed images and 
-          other visual aids to illustrate your points.
+          The first part of the module shows how to draw the Sierpiński triangle using the methods we're familiar with, namely loops and turtle graphics. We define a simple function that draws an equilateral triangle, and then, like with the Koch snowflake and the Dragon curve, we use a recursion to draw the fractal. Here follows the code and the result.
+		
         </p>
 	
 	
 	<pre><code class="language-python">
-	# This is just a sample Python code block
-	# demonstrating how code might be displayed.
+	# import the turtle setup
+	!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
+from turtle_setup import * 
+	# Define the function to draw an equilateral triangle
+def draw_triangle(length):
+    for _ in range(3):
+        forward(length)
+        left(120)
 
-	import numpy as np
-	import matplotlib.pyplot as plt
+	#Using recursion to define the fractal function
+	def sierpinski_triangle(length, order):
+    if order == 0:
+        draw_triangle(length)
+    else:
+        sierpinski_triangle(length / 2, order - 1)
+        forward(length / 2)
+        sierpinski_triangle(length / 2, order - 1)
+        backward(length / 2)
+        left(60)
+        forward(length / 2)
+        right(60)
+        sierpinski_triangle(length / 2, order - 1)
+        left(60)
+        backward(length / 2)
+        right(60)
 
-	x = np.linspace(-10, 10, 100)
-	y = 2*x + 5
+	initializeTurtle(initial_window_size=(1000, 2300), mode='auto')
+showturtle()
 
-	plt.plot(x, y)
-	plt.title("Sample Plot")
-	plt.show()
+# Set up the turtle
+jump(300, 500)
+face(90)
+color('green')
+
+# Draw the Sierpinski triangle
+for order in range(0,5): # I changed this part so we can see each step in the process
+  length = 400
+  sierpinski_triangle(length, order)
+  penup()
+  jump(300,500+(order+1)*400)
+  pendown()
+
+show()
 	</code></pre>
 
 
 
-        <figure>
+         <figure>
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Mandel_zoom_00_mandelbrot_set.jpg/800px-Mandel_zoom_00_mandelbrot_set.jpg"
-            alt="Mandelbrot Broad View"
+            src="https://anthonylenner.github.io/labreports/images/Sierpinski_triangle1.png"
+            alt="Sierpiński triangle "
             width="600"
             height="400"
             loading="lazy"
           />
           <figcaption>
-            <strong>Figure 1:</strong> A broad view of the Mandelbrot set 
-            (max_iter = 100). Colors represent how many iterations were 
-            needed to exceed |z|=2.
+            The Sierpinski_triangle, from the first to the fifth iteration.
           </figcaption>
         </figure>
 
