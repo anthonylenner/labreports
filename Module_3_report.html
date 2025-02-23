@@ -51,7 +51,7 @@
       <section id="introduction">
         <h2>Introduction</h2>
         <p>
-          In this module we explored different ways of displaying the Sierpiński triangle, first with turtle graphics and then with a Cellular Automaton. We also learned how to use the NumPy and MatPlot libraries to plot Cellular Automata with many different rules.
+          In this module we explored different ways of displaying the Sierpiński triangle, first with turtle graphics and then with Cellular Automata. We also learned how to use the NumPy and MatPlot libraries to plot Cellular Automata with many different rules.
         </p>
       </section>
 
@@ -140,7 +140,7 @@ show()
           </figcaption>
         </figure>
 	<p>
-	The next part of the module sets up Cellular Automaton with "rules" as inputs that produce many intricate and complex shapes. The first step is to import the libraries and then set up a function that will plot our image. We can think of it as a cartesian plane, but we hide the axis for visualisation purposes.
+	The next part of the module sets up a Cellular Automaton with "rules" as inputs that produce many intricate and complex shapes. The first step is to import the libraries and then set up a function that will plot our image. We can think of it as a cartesian plane, but we hide the axis for visualisation purposes.
 	</p>
 	<pre><code class="language-python">
 	import numpy as np #importing the NumPy library
@@ -155,7 +155,7 @@ def plot(x):
 	</code></pre>
 
 	<p>
-	Now we set up the starting state of the CA (Cellular Automaton), which is a black image with a single flipped pixel in the top middle. The code is pretty straightforwards.
+	Now we set up the starting state of the CA (Cellular Automaton), which is a black image with a single flipped pixel in the top middle. The code is pretty straightforward.
 	</p>	
         <pre><code class="language-python">
 	C = np.zeros((100,100)).astype(int) # creates a 100x100 array with 0s
@@ -176,7 +176,7 @@ def plot(x):
           </figcaption>
         </figure>
 	<p>
-	Next, we set up the rule that is going to define what the CA does.In this case, our rule is a function $rule: \{0,1\}^3 \to \{0,1\}$, that takes the state (0 or 1) of other cells to the determine the new state of the cell being acted upon. What really varies here are the values that the function takes. We use take a number 0-255 and convert it to binary, with leading zeros so the number has 8 digits, and then take each degit of the binary number and associate it with an element from $\{0,1\}^3$
+	Next, we set up the rule that is going to define what the CA does. In this case, our rule is a function $\text{rule}: \{0,1\}^3 \to \{0,1\}$, that takes the state (0 or 1) of other cells to determine the new state of the cell being acted upon. What really varies here are the values that the function takes. We use take a number 0-255 and convert it to binary, with leading zeros so the number has 8 digits, and then take each degit of the binary number and associate it with an element from $\{0,1\}^3$ in the following way:
 	</p>
 	      <pre><code class="language-python">
 	num = 90
@@ -224,7 +224,7 @@ def plot(x):
           </figcaption>
         </figure>
 	<p>
-	There is also another that the module presents, which is also interesting. It also uses the three upper adjacent cells to update the selected cell. But it "reads" them like a three digit binary number. to if three cells above are 010, the function converts the binary to decimal, $4(0)+2(1)+1(0)=2$. Then it divides the selected rule number by two to second power ( in this case) and takes the modulo 2. What is nice about this is that since we have a modulo 2, any integer can be a rule.
+	There is also another CA function that the module presents, which is also interesting. It also uses the three upper adjacent cells to update the selected cell. But it "reads" them like a three digit binary number. to if three cells above are 010, the function converts the binary to decimal, $4(0)+2(1)+1(0)=2$. Then it divides the selected rule number by two to second power ( in this case) and takes the modulo 2. What is nice about this is that since we have a modulo 2, any integer can be a rule.
 	</p>
 	 <pre><code class="language-python">
     def CA(X):
@@ -266,10 +266,21 @@ plot(CA(C))
       <section id="conclusion">
         <h2>Conclusion</h2>
         <p>
-          In this sample conclusion, we highlight how the iterative approach to generating fractals reveals the vast complexity inherent in seemingly simple equations. Through our Python implementation, we observed that small parameter changes can produce markedly different fractal patterns, underscoring the Mandelbrot set's boundless intricacy. Our visualizations not only confirm the self-similarity and infinite resolution of the set, but also underscore the crucial role of computational optimizations in making high-resolution explorations feasible. Ultimately, this lab demonstrates that fractal geometry, far from being mere mathematical curiosities, provides deep insights into pattern formation and complexity in both pure mathematics and broader scientific contexts. 
+	In this module we learned how very simple rules can yield surprisingly complex, beautiful, and surprisingly, fractal results. This explains how many objects in nature may look so complex, but are actually results of some simple initial conditions and rules. We also see this in the article share in the module, where we can see that all seashell types can be described by some equations and 14 parameters. 
         </p>
       </section>
-
+<figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/seashell.jpeg"
+            alt="Seashell"
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>
+            Fractal pattern in seashell.
+          </figcaption>
+        </figure>
      
      
      
