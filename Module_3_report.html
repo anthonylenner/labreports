@@ -136,10 +136,45 @@ show()
             loading="lazy"
           />
           <figcaption>
-            The Sierpinski_triangle, from the first to the fifth iteration.
+            The Sierpiński triangle, from the first to the fifth iteration.
           </figcaption>
         </figure>
+	<p>
+	The next part of the module sets up Cellular Automaton with "rules" as inputs that produce many intricate and complex shapes. The first step is to import the libraries and then set up a function that will plot our image. We can think of it as a cartesian plane, but we hide the axis for visualisation purposes.
+	</p>
+	<pre><code class="language-python">
+	import numpy as np #importing the NumPy library
+import matplotlib.pyplot as plt #importaing the MatPlot library
 
+def plot(x):
+    fig, ax = plt.subplots()  #creates the plane and the axes
+    im = ax.imshow(x, cmap = 'gray') #set colorscheme to grayscale
+    ax.axis('off') #hide the axes
+    fig.set_size_inches(10, 10) # set image size
+    plt.show() #show plot
+	</code></pre>
+
+	<p>
+	Now we set up the starting state of the CA (Cellular Automaton), which is a black image with a single flipped pixel in the top middle. The code is pretty straightforwards.
+	</p>	
+        <pre><code class="language-python">
+	C = np.zeros((100,100)).astype(int) # creates a 100x100 array with 0s
+	C[0,50] = 1 #flips the value of the top middle pixel
+	plot(C) #shows the image
+	</code></pre>
+	      
+	 <figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/image_example.png"
+            alt="Starting State"
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>
+            The starting state of the CA
+          </figcaption>
+        </figure>
 
 
 
