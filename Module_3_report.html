@@ -172,10 +172,27 @@ def plot(x):
             loading="lazy"
           />
           <figcaption>
-            The starting state of the CA
+            The starting state of the CA.
           </figcaption>
         </figure>
+	<p>
+	Next, we set up the rule that is going to define what the CA does.In this case, our rule is a function $rule: \{0,1\}^3 \to \{0,1\}$, that takes the state (0 or 1) of other cells to the determine the new state of the cell being acted upon. What really varies here are the values that the function takes. We use take a number 0-255 and convert it to binary, with leading zeros so the number has 8 digits, and then take each degit of the binary number and associate it with an element from $\{0,1\}^3$
+	</p>
+	      <pre><code class="language-python">
+	num = 90
+	print(f'{num:08b}') # this converts num to binary with a total of 8 digits, 90 gets converted to 01011010, as we can see in the list below.
 
+	rule = np.zeros((2,2,2)) #creates a three dimensional array with zeros
+
+	rule[0,0,0] = 0
+	rule[0,0,1] = 1
+	rule[0,1,0] = 0
+	rule[0,1,1] = 1
+	rule[1,0,0] = 1
+	rule[1,0,1] = 0
+	rule[1,1,0] = 1
+	rule[1,1,1] = 0
+	</code></pre>
 
 
       </section>
