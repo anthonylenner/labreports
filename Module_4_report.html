@@ -159,8 +159,72 @@ show()
         </figure>
 
 	<p>
-          This first setup draws a line, then a branch on each side with the previous order tree. By adding an angle argument, One can tweak the angles and length to create different trees
+          This second setup uses a more implicit recursion. Basically as long as the branch is long enough (>3), it will keep branching out and reiterating the function. In this version, instead of choosing the number of branches, one chooses the length that will be subtracted off each branch.
         </p>
+
+	<pre><code class="language-python">
+	# Define the fractal tree function
+def build_tree(branch_length, shorten_by, angle):
+    if branch_length > 3:
+
+        forward(branch_length)
+
+        new_length = branch_length - shorten_by # rerun the function with shorter branch size
+
+        left(angle)
+
+        build_tree(new_length, shorten_by, angle)
+
+        right(angle * 2)
+
+        build_tree(new_length, shorten_by, angle)
+
+        left(angle)
+
+        backward(branch_length)
+
+	# Initialize the turtle
+initializeTurtle(initial_window_size=(800, 800))
+
+# Set up the turtle's starting position and orientation
+jump(400, 600)  # Starting position at the bottom center of the canvas
+face(0)
+color('green')  # Set the pen color
+
+# Draw the fractal tree
+build_tree(80, 8, 25)
+
+# Display the drawing
+show()
+	</code></pre>
+
+	 <figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/build_tree(80, 8, 25).png"
+            alt="build_tree(80, 8, 25) "
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>
+            build_tree(80, 8, 25).
+          </figcaption>
+        </figure>
+
+	      <figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/build_tree(60, 5, 25).png"
+            alt="build_tree(60, 5, 25) "
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>
+           build_tree(60, 5, 25).
+          </figcaption>
+        </figure>
+
+
 
       </section>
 
