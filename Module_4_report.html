@@ -31,10 +31,10 @@
 
 
   <header>
-    <h1>Fractal Geometry Lab Report</h1>
+    <h1>Module 4 Report</h1>
     <p class="author">
-      [Your Name] <br />
-      [Date]
+      Anthony Lenner <br />
+      2/28/2025
     </p>
   </header>
   
@@ -51,10 +51,7 @@
       <section id="introduction">
         <h2>Introduction</h2>
         <p>
-          This is a sample introduction showcasing how you might structure 
-          your opening section. Replace this paragraph with a concise 
-          overview of the topic or project you are addressing. You can then 
-          expand the explanation as needed.
+          In this module, we learned how to code tree fractals in two different ways. The first way is the same kind of recursion we've used on previous fractals. The second way is also a recursion, but of a different kind.
         </p>
       </section>
 
@@ -64,24 +61,6 @@
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<!-- -------------------------------------------------------------------------------------------- -->
-	<pre><code class="language-python">
-	# This is just a sample Python code block
-	# demonstrating how code might be displayed.
-
-	import numpy as np
-	import matplotlib.pyplot as plt
-
-	x = np.linspace(-10, 10, 100)
-	y = 2*x + 5
-
-	plt.plot(x, y)
-	plt.title("Sample Plot")
-	plt.show()
-	</code></pre>
-
-
-
-
 
 
       </section>
@@ -96,32 +75,92 @@
       
         <h2>Results &amp; Analysis</h2>
         <p>
-          In this placeholder section, you might describe observations,
-          results, or insights gained from any analysis. You can incorporate 
-          references to equations (e.g., $y = mx + b$) or embed images and 
-          other visual aids to illustrate your points.
+          This first setup draws a line, then a branch on each side with the previous order tree. By adding an angle argument, One can tweak the angles and length to create different trees.
         </p>
 
+<pre><code class="language-python">
+	!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
+from turtle_setup import *
+	# Function to draw a fractal tree using recursion
+def fractal_tree(length, depth, angle):
+    if depth == 0:
+        return  #stop branching when depth reaches 0
+    else: #create a branch on each side with a smaller tree until depth reaches 0
 
+        forward(length)
+        left(30)
+
+        fractal_tree(length * 0.7, depth - 1, angle)
+
+        right(60)
+
+        fractal_tree(length * 0.7, depth - 1, angle)
+
+        left(30)
+        backward(length)
+
+	# Initialize the turtle
+initializeTurtle(initial_window_size=(500, 500))
+
+# Set up the turtle's starting position and orientation
+jump(250, 450)  # Starting position at the bottom center of the canvas
+face(0)
+color('green')  # Set the pen color
+
+# Set the length and depth for the fractal tree
+length = 100  # Initial length of the main trunk
+depth = 13  # Recursion depth (number of branching levels)
+angle = 20 # angle of the branches from the previous branch
+# Draw the fractal tree
+fractal_tree(length, depth, angle)
+
+# Display the drawing
+show()
+	</code></pre>
 
 
         <figure>
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Mandel_zoom_00_mandelbrot_set.jpg/800px-Mandel_zoom_00_mandelbrot_set.jpg"
-            alt="Mandelbrot Broad View"
+            src="https://anthonylenner.github.io/labreports/images/tree(100,13,20).png"
+            alt="tree(100,13,20) "
             width="600"
             height="400"
             loading="lazy"
           />
           <figcaption>
-            <strong>Figure 1:</strong> A broad view of the Mandelbrot set 
-            (max_iter = 100). Colors represent how many iterations were 
-            needed to exceed |z|=2.
+            fractal_tree(100, 13, 20).
           </figcaption>
         </figure>
 
+	      <figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/tree(100,13,30).png"
+            alt="tree(100,13,30) "
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>
+            fractal_tree(100, 13, 30).
+          </figcaption>
+        </figure>
 
+	      <figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/tree(100,13,40).png"
+            alt="tree(100,13,40) "
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>
+            fractal_tree(100, 13, 40).
+          </figcaption>
+        </figure>
 
+	<p>
+          This first setup draws a line, then a branch on each side with the previous order tree. By adding an angle argument, One can tweak the angles and length to create different trees
+        </p>
 
       </section>
 
