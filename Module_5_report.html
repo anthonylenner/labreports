@@ -23,7 +23,7 @@
       }
     }
   </script>
-  <title>Fractal Geometry Lab Report</title> 
+  <title>Module 5 Report</title> 
 </head>
 <body id="top">
 
@@ -31,10 +31,10 @@
 
 
   <header>
-    <h1>Fractal Geometry Lab Report</h1>
+    <h1>Module 5 Report</h1>
     <p class="author">
-      [Your Name] <br />
-      [Date]
+      Anthony Lenner <br />
+      3/21/2025
     </p>
   </header>
   
@@ -51,10 +51,7 @@
       <section id="introduction">
         <h2>Introduction</h2>
         <p>
-          This is a sample introduction showcasing how you might structure 
-          your opening section. Replace this paragraph with a concise 
-          overview of the topic or project you are addressing. You can then 
-          expand the explanation as needed.
+          In this short module, we learned how to code and display iterations of the Cantor set, a very curious and important set in mathematical analysis.
         </p>
       </section>
 
@@ -64,20 +61,6 @@
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<!-- -------------------------------------------------------------------------------------------- -->
-	<pre><code class="language-python">
-	# This is just a sample Python code block
-	# demonstrating how code might be displayed.
-
-	import numpy as np
-	import matplotlib.pyplot as plt
-
-	x = np.linspace(-10, 10, 100)
-	y = 2*x + 5
-
-	plt.plot(x, y)
-	plt.title("Sample Plot")
-	plt.show()
-	</code></pre>
 
 
 
@@ -96,11 +79,54 @@
       
         <h2>Results &amp; Analysis</h2>
         <p>
-          In this placeholder section, you might describe observations,
-          results, or insights gained from any analysis. You can incorporate 
-          references to equations (e.g., $y = mx + b$) or embed images and 
-          other visual aids to illustrate your points.
+          The construction of the Cantor set is very simple. We start with the segment [1,0]. Then we remove the open middle third (1/3,2/3) and remain with [0,1/3] and [2/3,1]. We do the same to these two segments and repeat the process infinitely. the Cantor set is the set of elements present in all these iterations. It is an example of very interesting properties, such as closedness, perfectness and uncountability. One can also alter the size of the removed intervals without affecting these properties.
         </p>
+
+	      	<pre><code class="language-python">
+	# Import libraries for math and plotting
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Set initial parameters
+x_start = 0       # Starting x-coordinate of the first bar
+x_end = 3         # Ending x-coordinate of the first bar
+y_position = 0    # Starting y-coordinate (height of the first bar)
+bar_height = 5    # Height of each bar
+spacing = 10      # Space between bars (distance downwards)
+depth = 6         # Number of levels to draw
+r = 3             # How much is removed from the middle
+
+# Define a function to create the Cantor Set pattern
+def cantor_set(x_start, x_end, y_position, r, depth):
+    if depth == 0:
+        return []
+
+    # Left and right segments for the current bar
+    left_segment = [[x_start, x_start + (x_end - x_start) / r, y_position]]
+    right_segment = [[x_end - (x_end - x_start) / r, x_end, y_position]]
+
+    # Recursively generate segments for the next levels
+    # Pass 'r' and 'depth - 1' in the recursive calls
+    left_recursive = cantor_set(x_start, x_start + (x_end - x_start) / r, y_position - spacing, r, depth - 1)  
+    right_recursive = cantor_set(x_end - (x_end - x_start) / r, x_end, y_position - spacing, r, depth - 1)
+
+    # Combine the current segments with the results from recursive calls
+    return left_segment + right_segment + left_recursive + right_recursive
+
+# Generate Cantor Set segments data
+segments = np.array(cantor_set(x_start, x_end, y_position, r, depth))  # Convert to an array for easy plotting
+
+# Plot the Cantor Set
+plt.figure(figsize=(25, 25))
+
+# Draw each segment as a black bar
+for x_start, x_end, y in segments:
+    plt.fill_between([x_start, x_end], [y] * 2, [y - bar_height] * 2, color="black")
+
+# Hide the axes for a clean look
+plt.axis('off')
+plt.show()
+	</code></pre>
 
 
 
