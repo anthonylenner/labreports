@@ -23,7 +23,7 @@
       }
     }
   </script>
-  <title>Fractal Geometry Lab Report</title> 
+  <title>Module 6 Report</title> 
 </head>
 <body id="top">
 
@@ -31,10 +31,10 @@
 
 
   <header>
-    <h1>Fractal Geometry Lab Report</h1>
+    <h1>Module 6 Report</h1>
     <p class="author">
-      [Your Name] <br />
-      [Date]
+      Anthony Lenner <br />
+      03/25/2025
     </p>
   </header>
   
@@ -51,10 +51,7 @@
       <section id="introduction">
         <h2>Introduction</h2>
         <p>
-          This is a sample introduction showcasing how you might structure 
-          your opening section. Replace this paragraph with a concise 
-          overview of the topic or project you are addressing. You can then 
-          expand the explanation as needed.
+          In this module, we learned how to plot a grid, turn it into the complex plane, apply transformations and then visualize them. This way, we can visualize how some sets like the Mandelbrot set are formed.
         </p>
       </section>
 
@@ -64,21 +61,7 @@
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<!-- -------------------------------------------------------------------------------------------- -->
-	<pre><code class="language-python">
-	# This is just a sample Python code block
-	# demonstrating how code might be displayed.
-
-	import numpy as np
-	import matplotlib.pyplot as plt
-
-	x = np.linspace(-10, 10, 100)
-	y = 2*x + 5
-
-	plt.plot(x, y)
-	plt.title("Sample Plot")
-	plt.show()
-	</code></pre>
-
+	
 
 
 
@@ -96,14 +79,69 @@
       
         <h2>Results &amp; Analysis</h2>
         <p>
-          In this placeholder section, you might describe observations,
-          results, or insights gained from any analysis. You can incorporate 
-          references to equations (e.g., $y = mx + b$) or embed images and 
-          other visual aids to illustrate your points.
+          The Mandelbrot Set is defined as the set of all complex numbers $c$ such that $|0|,|f_c(0)|,|f_c(f_c(0))|, \cdots$ is bounded, where $f_c(z) := z^2 +c$. In other words, repeated iterations of the function keep the origin bounded. To visualize this, we first need to create a grid and plot some points to see where they land after we apply the transformation.
         </p>
 
+<pre><code class="language-python">
+	import numpy as np
+import matplotlib.pyplot as plt
+
+# Create a simple 2D grid of points using NumPy
+def generate_grid(size):
+    x = np.linspace(-3, 3, size)  # Generate 'size' number of points between -3 and 3, this can vary
+    y = np.linspace(-3, 3, size)
+    grid = np.meshgrid(x, y)  # Create a 2D grid of points
+    return grid
+
+# Visualize the grid of points
+def plot_grid(grid):
+    x_grid, y_grid = grid
+    plt.figure(figsize=(10, 10))
+    plt.scatter(x_grid, y_grid, s=1, color='blue')  # Plot the grid points
+    plt.title(f'2D Grid of {len(x_grid)}x{len(y_grid)} points')
+    plt.xlim(-3, 3) # Keep the axes fixed
+    plt.ylim(-3, 3)
+    plt.gca().set_aspect('equal') # Maintain aspect ratio
+    plt.show()
 
 
+# Set the size of the grid
+size = 50  # You can adjust this to make the grid denser or sparser
+
+# Generate and plot the grid
+grid = generate_grid(size)
+plot_grid(grid)
+
+	</code></pre>
+
+	
+ <p>
+Then, we just need to define the transformation that we want to apply and specify the parameter $c$.
+</p>
+
+<pre><code class="language-python">
+	def iterative_transform(grid, iterations, c):
+    x_grid, y_grid = grid
+    z = x_grid + 1j * y_grid  # Create a complex plane
+    for i in range(iterations):
+        z = z ** 2 + c  # Iteratively apply the transformation
+    return np.real(z), np.imag(z)
+
+# Set the number of iterations and parameter
+iterations = 1
+c= -0.5
+
+for i in range(0, 11):
+  # Apply the iterative transformation
+  fractal_grid = iterative_transform(grid, i, c)
+
+  # Plot the fractal grid
+  plot_grid(fractal_grid)
+
+	</code></pre>      
+<p>
+Here are some results with varying parameters and .
+</p>
 
         <figure>
           <img
