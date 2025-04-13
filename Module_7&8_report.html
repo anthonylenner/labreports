@@ -51,7 +51,7 @@
       <section id="introduction">
         <h2>Introduction</h2>
         <p>
-          In these two modules we learned how to code and visualise with intricate detail the Mandelbrot and Julia sets. The Mandelbrot set consists of complex numbers $c$ such that sequence $0, f(0), f(f(0)), f(f(f(0))), \dots$ where $f(z)=z^2 +c$ stays bounded. For a fixed complex number $c$, the Julia set represents the starting values $z$ such that $z, f(z), f(f(z)), f(f(f(z))), \dots$ stays bounded 
+          In these two modules we learned how to code and visualise with intricate detail the Mandelbrot and Julia sets. The Mandelbrot set consists of complex numbers $c$ such that sequence $0, f(0), f(f(0)), f(f(f(0))), \dots$ where $f(z)=z^2 +c$ stays bounded. For a fixed complex number $c$, the Julia set represents the starting values $z$ such that $z, f(z), f(f(z)), f(f(f(z))), \dots$ stays bounded. 
         </p>
       </section>
 
@@ -61,22 +61,7 @@
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<!-- -------------------------------------------------------------------------------------------- -->
-	<pre><code class="language-python">
-	# This is just a sample Python code block
-	# demonstrating how code might be displayed.
-
-	import numpy as np
-	import matplotlib.pyplot as plt
-
-	x = np.linspace(-10, 10, 100)
-	y = 2*x + 5
-
-	plt.plot(x, y)
-	plt.title("Sample Plot")
-	plt.show()
-	</code></pre>
-
-
+	
 
 
 
@@ -93,32 +78,93 @@
       
         <h2>Results &amp; Analysis</h2>
         <p>
-          In this placeholder section, you might describe observations,
-          results, or insights gained from any analysis. You can incorporate 
-          references to equations (e.g., $y = mx + b$) or embed images and 
-          other visual aids to illustrate your points.
+          For the Mandelbrot set, we first create the mandelbrot_set function, which takes a complex number $c$ and returns the number $n$ of iterations it took for the absolute value of an iteration to be larger than or equal to 2, under a max_iter limit number of iterations. Then we create our coordinate system with np.linspace and an empty array two-dimensional n3 that we fill each point with the number n returned by the mandelbrot_set function when applied to the complex number associated with that point. Then the next step is just plotting like we have been doing with matplot. The result is a complex plane with a gradient based on how many iterations it took for a certain point to blow up to infinity.
         </p>
+<pre><code class="language-python">
+	import numpy as np
+import matplotlib.pyplot as plt
+from numba import jit
 
+# JIT-optimized mandelbrot function
+@jit(nopython=True)
+def mandelbrot(c, max_iter):
+    z = 0
+    n = 0
+    while abs(z) <= 2 and n < max_iter:
+        z = z*z + c
+        n += 1
+    return n
 
+# JIT-optimized mandelbrot set generator
+@jit(nopython=True)
+def mandelbrot_set(xmin, xmax, ymin, ymax, width, height, max_iter):
+    r1 = np.linspace(xmin, xmax, width)
+    r2 = np.linspace(ymin, ymax, height)
+    n3 = np.empty((width, height))
 
+    for i in range(width):
+        for j in range(height):
+            n3[i, j] = mandelbrot(r1[i] + 1j * r2[j], max_iter)
 
-        <figure>
+    return n3
+
+# Parameters for the plot
+xmin, xmax, ymin, ymax = -2.0, 1.0, -1.5, 1.5
+width, height = 800, 800
+max_iter = 100
+
+# Generate the Mandelbrot Set
+n3 = mandelbrot_set(xmin, xmax, ymin, ymax, width, height, max_iter)
+# Parameters for the initial zoom level
+xmin, xmax, ymin, ymax = -0.75, -0.74, 0.1, 0.11  # Zoom into this specific area
+width, height = 800, 800  # Resolution of the image
+max_iter = 1000  # Number of iterations
+
+# Generate the Mandelbrot Set with zoom
+n3 = mandelbrot_set(xmin, xmax, ymin, ymax, width, height, max_iter)
+
+# Plotting the zoomed Mandelbrot Set
+plt.figure(figsize=(10, 10))
+plt.imshow(n3.T, extent=[xmin, xmax, ymin, ymax], cmap='inferno')
+plt.colorbar()
+plt.title("Mandelbrot Set - Zoomed In")
+plt.show()
+	</code></pre>
+
+ <figure>
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Mandel_zoom_00_mandelbrot_set.jpg/800px-Mandel_zoom_00_mandelbrot_set.jpg"
-            alt="Mandelbrot Broad View"
+            src="https://anthonylenner.github.io/labreports/images/mandelbrotset-75to-74.png"
+            alt="build_tree(80, 8, 25) "
             width="600"
             height="400"
             loading="lazy"
           />
-          <figcaption>
-            <strong>Figure 1:</strong> A broad view of the Mandelbrot set 
-            (max_iter = 100). Colors represent how many iterations were 
-            needed to exceed |z|=2.
+          <figcaption>A section of the Mandelbrot set.
           </figcaption>
         </figure>
 
-
-
+ <figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/cantor_set.png"
+            alt="build_tree(80, 8, 25) "
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>Another section of the Mandelbrot set.
+          </figcaption>
+        </figure>
+ <figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/fullmandelbrotset.png"
+            alt="build_tree(80, 8, 25) "
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>The Mandelbrot set.
+          </figcaption>
+        </figure>
 
       </section>
 
