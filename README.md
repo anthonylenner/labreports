@@ -17,6 +17,8 @@ Module 5 report: https://anthonylenner.github.io/labreports/Module_5_report.html
 
 Module 6 report: https://anthonylenner.github.io/labreports/Module_6_report.html
 
+Modules 7 and 8 report: https://anthonylenner.github.io/labreports/Module_7&8_report.html
+
 # Notes
 
 Hello World
