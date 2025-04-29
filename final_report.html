@@ -61,21 +61,7 @@
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<!-- -------------------------------------------------------------------------------------------- -->
-	<pre><code class="language-python">
-	# This is just a sample Python code block
-	# demonstrating how code might be displayed.
-
-	import numpy as np
-	import matplotlib.pyplot as plt
-
-	x = np.linspace(-10, 10, 100)
-	y = 2*x + 5
-
-	plt.plot(x, y)
-	plt.title("Sample Plot")
-	plt.show()
-	</code></pre>
-
+	
 
 
 
@@ -93,32 +79,146 @@
       
         <h2>Results &amp; Analysis</h2>
         <p>
-          In this placeholder section, you might describe observations,
-          results, or insights gained from any analysis. You can incorporate 
-          references to equations (e.g., $y = mx + b$) or embed images and 
-          other visual aids to illustrate your points.
+          To generate the Sierpinski Triangle, we first set up the vertices, and a midpoint function to return the midpoint of two points. Now the iterative process is as follows: we pick a random starting point and then randomly select a vertex. Then we apply the midpoint function and the result is the next point in the list. We repeat this until we reach the desired number of iterations and we have the Sierpinski Triangle.
         </p>
 
+		<pre><code class="language-python">
+	import matplotlib.pyplot as plt
+from random import random, randint #importing libraries
+import numpy as np
 
+def midpoint(P, Q):
+    return (0.5*(P[0] + Q[0]), 0.5*(P[1] + Q[1]))
 
+vertices = [(0, 0), (2, 2*np.sqrt(3)), (4, 0)]  #sets up vertices
+iterates = 2000                                 #number of iterations
+x, y = [0]*iterates, [0]*iterates               #lists with 0s of size iterates
+x[0], y[0] = 1, 3.5                             #initial point
 
-        <figure>
+for i in range(1, iterates):
+
+    k = randint(0, 2)
+
+    x[i], y[i] = midpoint( vertices[k], (x[i-1], y[i-1]) )
+
+plt.figure(figsize=(8, 8))
+plt.scatter(x, y, color = 'b', s=0.1)
+plt.title('Sierpinski Triangle Generated Using the Chaos Game')
+plt.axis('equal')  # Ensure aspect ratio is equal for an equilateral triangle
+plt.show()
+	</code></pre>
+
+ <figure>
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Mandel_zoom_00_mandelbrot_set.jpg/800px-Mandel_zoom_00_mandelbrot_set.jpg"
-            alt="Mandelbrot Broad View"
+            src="https://anthonylenner.github.io/labreports/images/Sierpinski_triangle_2000.png"
+            alt="build_tree(80, 8, 25) "
             width="600"
             height="400"
             loading="lazy"
           />
-          <figcaption>
-            <strong>Figure 1:</strong> A broad view of the Mandelbrot set 
-            (max_iter = 100). Colors represent how many iterations were 
-            needed to exceed |z|=2.
+          <figcaption> Sierpinsky Triangle with 2000 iterations.
           </figcaption>
         </figure>
 
+ <figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/Sierpinski_triangle_100000.png"
+            alt="build_tree(80, 8, 25) "
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>  Sierpinsky Triangle with 100000 iterations.
+          </figcaption>
+        </figure>
 
+        <p>
+	For Barnsley's Fern, we first define four functions that will move points differently and we associate probabilities to each function to determine what portion of the points will be moved by it. One function takes the points to the stem of the fern, one makes an order smaller fern and attaches it to the top of the stem, and the other two attach the two bottom leaves of the fern.
+        </p>
 
+	<pre><code class="language-python">
+	import random
+import matplotlib.pyplot as plt
+
+# Define the transformation functions
+def f1(x, y):     #stem
+    x = 0
+    y = 0.16 * y
+    return x, y
+
+def f2(x, y):           #smaller order copy
+    x_new = 0.85 * x + 0.04 * y
+    y_new = -0.04 * x + 0.85 * y + 1.6
+    return x_new, y_new
+
+def f3(x, y):         #left bottom leaf
+    x_new = 0.2 * x - 0.26 * y
+    y_new = 0.23 * x + 0.22 * y + 1.6
+    return x_new, y_new
+
+def f4(x, y):          #right bottom leaf
+    x_new = -0.15 * x + 0.28 * y
+    y_new = 0.26 * x + 0.24 * y + 0.44
+    return x_new, y_new
+
+# Probabilities for each function
+probabilities = [0.01, 0.85, 0.07, 0.07]
+
+# Barnsley Fern function
+def barnsley_fern(iterations):
+    x, y = 0, 0
+    points = []
+
+    for _ in range(iterations):
+        rand = random.random()
+        if rand   < sum(probabilities[:1]):    #pick f1 if rand <0.01
+            x, y = f1(x, y)
+        elif rand < sum(probabilities[:2]):    #pick f2 if rand 0.01=<rand<0.86
+            x, y = f2(x, y)
+        elif rand < sum(probabilities[:3]):    #pick f3 if rand 0.86=<rand<0.93
+            x, y = f3(x, y)
+        else:
+            x, y = f4(x, y)                    #pick f4 if rand 0.93=<rand<1
+
+        points.append((x, y))                  #append list
+
+    return points
+
+# Generate points for the Barnsley Fern
+iterations = 100000
+fern_points = barnsley_fern(iterations)
+
+# Plot the Barnsley Fern
+x_vals, y_vals = zip(*fern_points)
+plt.figure(figsize=(6, 10))
+plt.scatter(x_vals, y_vals, s=0.1, color='green')
+plt.title('Barnsley Fern')
+plt.show()
+	</code></pre>
+
+<figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/barnsleyugly.png"
+            alt="build_tree(80, 8, 25) "
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption> Regular Barnsley Fern.
+          </figcaption>
+        </figure>
+
+ <figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/barnsleypretty.png"
+            alt="build_tree(80, 8, 25) "
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>   Shifted Barnsley Fern.
+          </figcaption>
+        </figure>
 
       </section>
 
