@@ -222,42 +222,40 @@ plt.show()
           </figcaption>
         </figure>
 	      <p>
-                 asdasda
+                 Next we learned how to use L-systems to create a tree being blown by wind. To accomplish this, first we set up a function to apply a set of rules to a character. Then we create another function that takes a single starting character, an "axiom," and outputs a string based on the rule set. This can be repeated iteratively to create fractal patterns.
 	</p>
 
-		
-	      
 <pre><code class="language-python">
 	# Initialize the turtle
 initializeTurtle()
 showturtle()
 
 # Function to apply L-system rules
-def apply_rule(char, rules):
+def apply_rule(char, rules):                   #applies rule to character
     return rules.get(char, char)
 
 # Function to generate L-system string
-def generate_lsystem(axiom, rules, iterations):
+def generate_lsystem(axiom, rules, iterations):           #applies rule over a string
     current_string = axiom
     for _ in range(iterations):
         current_string = ''.join([apply_rule(char, rules) for char in current_string])
     return current_string
 
 # Function to draw the L-system with turtle
-def draw_lsystem(turtle_string, length, angle):
+def draw_lsystem(turtle_string, length, angle):      #defines what each character does
     stack = []
     for command in turtle_string:
-        if command == 'F':
-            forward(length)
-        elif command == '+':
-            left(angle)
-        elif command == '-':
-            right(angle)
-        elif command == '[':
+        if command == 'F':                            #moves forward
+            forward(length) 
+        elif command == '+':                          #turns left
+            left(angle)        
+        elif command == '-':                          #turns right
+            right(angle)                              
+        elif command == '[':                          #saves the position like a checkpoint
             position = (getx(), gety())
             heading_angle = heading()
             stack.append((position, heading_angle))
-        elif command == ']':
+        elif command == ']':                         #returns to the previously saved position
             position, heading_angle = stack.pop()
             jump(position[0], position[1])
             face(heading_angle)
@@ -266,7 +264,7 @@ def draw_lsystem(turtle_string, length, angle):
 rules = {'F': 'FF+[+F-F-F]-[-F+F+F]'}
 
 axiom = 'F'
-iterations = 2
+iterations = 4
 
 # Generate the L-system string
 turtle_string = generate_lsystem(axiom, rules, iterations)
@@ -284,6 +282,97 @@ draw_lsystem(turtle_string, length, angle)
 # Display the drawing
 show()
 	</code></pre>
+
+	      
+	 <figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/blowntree.png"
+            alt="build_tree(80, 8, 25) "
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>  Tree blown by wind.
+          </figcaption>
+        </figure>
+
+		  <p>
+		After getting familiar with L-systems, we turn to Hilbert curves. They are very special, since one can use them to fill a two dimensional square with a one dimensional continuous curve. That is why they are also called space-filling curves. The process is the same but with a different rule set.
+  	</p>
+	      
+<pre><code class="language-python">
+	# Import necessary modules
+import math
+
+# Initialize the turtle
+initializeTurtle()
+showturtle()
+
+# Function to apply L-system rules
+def apply_rules(char, rules):
+    return rules.get(char, char)
+
+# Function to generate L-system string
+def generate_lsystem(axiom, rules, iterations):
+    current_string = axiom
+    for _ in range(iterations):
+        next_string = ''.join([apply_rules(char, rules) for char in current_string])
+        current_string = next_string
+    return current_string
+
+# Function to draw the L-system with turtle
+def draw_lsystem(turtle_string, length, angle):
+    for command in turtle_string:
+        if command == 'F':
+            forward(length)
+        elif command == '+':
+            left(angle)
+        elif command == '-':
+            right(angle)
+        # 'L' and 'R' are placeholders; we ignore them in drawing
+        else:
+            pass  # Ignore other characters
+
+# Set the parameters for the Hilbert Curve
+axiom = 'L'
+rules = {
+    'L': '-RF+LFL+FR-',
+    'R': '+LF-RFR-FL+'
+}
+iterations = 5  # Adjust the iterations to change the order (e.g., 1 to 5)
+angle = 90
+
+# Generate the L-system string for the Hilbert curve
+hilbert_string = generate_lsystem(axiom, rules, iterations)
+
+# Calculate the step size based on desired size and iterations
+size = 400  # Total size of the Hilbert curve (adjust as needed)
+n = 2 ** iterations - 1
+length = size / n
+
+# Move to starting position
+jump(400, 500)  # Adjust the starting position to fit your canvas
+face(0)
+color('blue')
+
+# Draw the Hilbert curve
+draw_lsystem(hilbert_string, length, angle)
+
+# Display the drawing
+show()
+	</code></pre>
+
+	       <figure>
+          <img
+            src="https://anthonylenner.github.io/labreports/images/hilbert.png"
+            alt="build_tree(80, 8, 25) "
+            width="600"
+            height="400"
+            loading="lazy"
+          />
+          <figcaption>  Hilbert's curve at 5 iterations
+          </figcaption>
+        </figure>
 	      
       </section>
 
@@ -297,7 +386,7 @@ show()
       <section id="conclusion">
         <h2>Conclusion</h2>
         <p>
-         In this module, we learned about another type of fractal that models a real world phenomenon. This just shows how flexible fractals are as a tool to understand nature and other complicated behaviors. We also learned a new technique of recursion, reiterating a function until the condition is not met anymore.
+		In this module we learned how to generate fractal patterns using the chaos game and L-systems. Throughout the course, we learned many different ways to code and visualize fractal patterns, and also developed some HTML and Python skills. With these tools available, we are now prepared to manipulate and toy with fractal patterns in real life, an essential skill for scientists.
         </p>
       </section>
    
