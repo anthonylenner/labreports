@@ -171,14 +171,14 @@ def barnsley_fern(iterations):
 
     for _ in range(iterations):
         rand = random.random()
-        if rand   < sum(probabilities[:1]):    #pick f1 if rand <0.01
+        if rand   < sum(probabilities[:1]):    #pick f1 if rand less than 0.01
             x, y = f1(x, y)
-        elif rand < sum(probabilities[:2]):    #pick f2 if rand 0.01<rand<0.86 or rand=0.01
+        elif rand < sum(probabilities[:2]):    #pick f2 if rand 0.01 leq rand less than 0.86 
             x, y = f2(x, y)
-        elif rand < sum(probabilities[:3]):    #pick f3 if rand 0.86<rand<0.93 or rand=0.86
+        elif rand < sum(probabilities[:3]):    #pick f3 if rand 0.86 leq rand less than 0.93
             x, y = f3(x, y)
         else:
-            x, y = f4(x, y)                    #pick f4 if rand 0.93<rand<1 or rand=0.93
+            x, y = f4(x, y)                    #pick f4 if rand 0.93 leq rand less than 1 
 
         points.append((x, y))                  #append list
 
